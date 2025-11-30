@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import svgr from "vite-plugin-svgr";
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [
     react(),
     svgr({
@@ -11,6 +11,7 @@ export default defineConfig({
       exclude: "",
     }),
   ],
+  base: command === 'build' ? '/2025-d-order-fe-customer-v2/' : '/',
   resolve: {
     alias: {
       "@components": path.resolve(__dirname, "src/components"),
@@ -24,4 +25,4 @@ export default defineConfig({
       "@stores": path.resolve(__dirname, "src/stores"),
     },
   },
-});
+}));

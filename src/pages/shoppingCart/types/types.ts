@@ -8,7 +8,7 @@ export interface Menu {
   id: number;
   is_soldout: boolean;
   menu_amount: number;
-  menu_image?: string;
+  menu_image?: string | null;
   menu_name: string;
   menu_price: number;
   min_menu_amount: number;
