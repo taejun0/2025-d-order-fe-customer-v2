@@ -7,8 +7,15 @@ interface BtnProps {
 }
 
 const Btn = ({ text, onClick, disabled = false }: BtnProps) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (!disabled && onClick) {
+      onClick();
+    }
+  };
+
   return (
-    <BtnContainer onClick={onClick} disabled={disabled}>
+    <BtnContainer onClick={handleClick} disabled={disabled} type="button">
       {text}
     </BtnContainer>
   );
