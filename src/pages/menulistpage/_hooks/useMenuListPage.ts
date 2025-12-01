@@ -96,8 +96,14 @@ const useMenuListPage = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const boothId = localStorage.getItem('boothId') ?? '1';
-        const tableId = localStorage.getItem('tableNum') ?? '1';
+        // 목 데이터 환경: 부스 ID가 없어도 기본값 사용
+        let boothId = localStorage.getItem('boothId');
+        if (!boothId || !/^\d+$/.test(boothId)) {
+          boothId = '1';
+          localStorage.setItem('boothId', '1');
+        }
+
+        const tableId = localStorage.getItem('tableNum');
         const boothIdNumber = parseInt(boothId, 10);
         const tableNumber = tableId ? parseInt(tableId, 10) : null;
 

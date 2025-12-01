@@ -78,6 +78,13 @@ const LoginPage = () => {
     handleStartOrder(tableValue);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && tableValue && !isLoading) {
+      e.preventDefault();
+      handleStartOrder(tableValue);
+    }
+  };
+
   return (
     <S.LoginWrapper>
       <LoginLogo boothName={boothName} />
@@ -87,6 +94,7 @@ const LoginPage = () => {
           placeholder="예) 9"
           ref={tableRef}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           type="tel"
         />
         <S.NoticeText $isError={isTableError}>{errorMessage}</S.NoticeText>
