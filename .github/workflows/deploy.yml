@@ -42,6 +42,23 @@ jobs:
           VITE_BASE_URL: ${{ secrets.VITE_BASE_URL || '' }}
           VITE_WS_URL: ${{ secrets.VITE_WS_URL || '' }}
 
+      - name: Verify build output
+        working-directory: ./customer
+        run: |
+          if [ ! -f dist/index.html ]; then
+            echo "ERROR: dist/index.html not found!"
+            exit 1
+          fi
+          if grep -q "/src/main.tsx" dist/index.html; then
+            echo "ERROR: dist/index.html still references /src/main.tsx!"
+            echo "Build output:"
+            cat dist/index.html
+            exit 1
+          fi
+          echo "Build verification passed!"
+          echo "Script tag in dist/index.html:"
+          grep -E "script|link" dist/index.html | head -5
+
       - name: Create 404.html for SPA routing
         working-directory: ./customer
         run: cp dist/index.html dist/404.html
