@@ -36,7 +36,14 @@ jobs:
 
       - name: Build
         working-directory: ./customer
-        run: npm run build
+        run: |
+          npm run build
+          echo "=== Build completed, checking dist/index.html ==="
+          cat dist/index.html | grep -E "script|link" | head -3
+          if grep -q "/src/main.tsx" dist/index.html; then
+            echo "ERROR: Build failed! dist/index.html still references /src/main.tsx"
+            exit 1
+          fi
         env:
           NODE_ENV: production
           VITE_BASE_URL: ${{ secrets.VITE_BASE_URL || '' }}
