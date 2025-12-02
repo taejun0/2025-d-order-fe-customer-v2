@@ -4,10 +4,13 @@ import path from 'path';
 import svgr from 'vite-plugin-svgr';
 // https://vite.dev/config/
 export default defineConfig(({ command }) => ({
-  plugins: [react(), svgr({
-    include: '**/*.svg?react',
-    exclude: '',
-  })],
+  plugins: [
+    react(),
+    svgr({
+      include: '**/*.svg?react',
+      exclude: '',
+    }),
+  ],
   base: command === 'build' ? '/2025-d-order-fe-customer-v2/' : '/',
   server: {
     // https: true,
