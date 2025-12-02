@@ -34,9 +34,17 @@ jobs:
         working-directory: ./customer
         run: npm ci
 
+      - name: Clean dist directory
+        working-directory: ./customer
+        run: rm -rf dist || true
+
       - name: Build
         working-directory: ./customer
-        run: npm run build
+        run: |
+          echo "Starting build..."
+          npm run build
+          echo "Build completed. Checking dist directory:"
+          ls -la dist/ || echo "dist directory not found!"
         env:
           NODE_ENV: production
           VITE_BASE_URL: ${{ secrets.VITE_BASE_URL || '' }}
@@ -45,17 +53,20 @@ jobs:
       - name: Verify build output
         working-directory: ./customer
         run: |
+          echo "Verifying build output..."
           if [ ! -f dist/index.html ]; then
             echo "ERROR: dist/index.html not found!"
+            ls -la dist/ || echo "dist directory does not exist!"
             exit 1
           fi
+          echo "dist/index.html exists. Checking content:"
+          cat dist/index.html
           if grep -q "/src/main.tsx" dist/index.html; then
             echo "ERROR: dist/index.html still references /src/main.tsx!"
-            echo "Build output:"
-            cat dist/index.html
+            echo "This means the build failed or used wrong config!"
             exit 1
           fi
-          echo "Build verification passed!"
+          echo "✓ Build verification passed!"
           echo "Script tag in dist/index.html:"
           grep -E "script|link" dist/index.html | head -5
 
