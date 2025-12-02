@@ -1,5 +1,5 @@
 // src/pages/orderList/apis/getOrderList.ts
-import axios from 'axios';
+// import axios from 'axios';
 
 export interface RawOrderItem {
   type: 'menu' | 'setmenu';
@@ -84,17 +84,17 @@ export function normalizeOrder(item: RawOrderItem): NormalizedOrderItem {
   return { id, kind, name, price, image, quantity };
 }
 
-const api = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL ?? '',
-  withCredentials: true,
-  headers: { 'Content-Type': 'application/json' },
-});
+// const api = axios.create({
+//   baseURL: import.meta.env.VITE_BASE_URL ?? '',
+//   withCredentials: true,
+//   headers: { 'Content-Type': 'application/json' },
+// });
 
 // ========== 목 데이터 ==========
 const delay = (ms: number = 500) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
-const baseUrl = import.meta.env.BASE_URL;
+// const baseUrl = import.meta.env.BASE_URL;
 
 // 목 데이터: 주문 목록
 const mockOrderList: OrderListResponse = {
@@ -183,7 +183,7 @@ const mockOrderList: OrderListResponse = {
   },
 };
 
-export async function getOrderList(tableNum: number, boothId: number) {
+export async function getOrderList(_tableNum: number, _boothId: number) {
   await delay(500);
   return mockOrderList;
 }

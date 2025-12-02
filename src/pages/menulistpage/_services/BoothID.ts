@@ -1,12 +1,12 @@
 // _services/BoothService.ts
-import { instance } from '@services/instance';
+// import { instance } from '@services/instance';
 
-type BoothNameResp = {
-  status: string;
-  message: string;
-  code: number;
-  data?: { booth_id: number; booth_name: string };
-};
+// type BoothNameResp = {
+//   status: string;
+//   message: string;
+//   code: number;
+//   data?: { booth_id: number; booth_name: string };
+// };
 
 // ========== 목 데이터 ==========
 const delay = (ms: number = 500) =>

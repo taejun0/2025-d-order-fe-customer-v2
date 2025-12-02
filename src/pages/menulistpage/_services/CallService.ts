@@ -1,5 +1,5 @@
 // src/pages/MenuListPage/_services/CallService.ts
-import { instance } from '@services/instance';
+// import { instance } from '@services/instance';
 
 // ========== 목 데이터 ==========
 const delay = (ms: number = 500) =>
