@@ -32,7 +32,16 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build
+        run: |
+          npm run build
+          echo "=== Build verification ==="
+          ls -la dist/
+          echo "=== dist/index.html content ==="
+          cat dist/index.html
+          if grep -q "/src/main.tsx" dist/index.html; then
+            echo "ERROR: Build failed! dist/index.html still references /src/main.tsx"
+            exit 1
+          fi
         env:
           NODE_ENV: production
           VITE_BASE_URL: ${{ secrets.VITE_BASE_URL || '' }}
@@ -40,6 +49,14 @@ jobs:
 
       - name: Create 404.html for SPA routing
         run: cp dist/index.html dist/404.html
+
+      - name: Verify dist contents
+        run: |
+          echo "=== Verifying dist folder ==="
+          ls -la dist/
+          ls -la dist/assets/ || echo "No assets folder!"
+          echo "=== dist/index.html script tags ==="
+          grep -E "script|link" dist/index.html || echo "No script/link tags found!"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
