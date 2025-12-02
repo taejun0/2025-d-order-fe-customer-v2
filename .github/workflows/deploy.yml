@@ -36,7 +36,13 @@ jobs:
 
       - name: Build
         working-directory: ./customer
-        run: npm run build -- --mode production
+        run: |
+          tsc -b
+          vite build
+          echo "Build completed. Checking dist directory:"
+          ls -la dist/ || echo "dist directory not found"
+          echo "Checking index.html:"
+          cat dist/index.html | grep -E "(script|link)" | head -5
         env:
           NODE_ENV: production
           VITE_BASE_URL: ${{ secrets.VITE_BASE_URL || '' }}
